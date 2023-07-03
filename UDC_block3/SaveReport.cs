@@ -56,11 +56,11 @@ namespace UDC_block3
                     Entity rent = result1.Entities[0];
                     if ((int)report.Attributes["crfe2_type"] == 0)
                     {
-                        report.Attributes["crfe2_date"] = rent.Attributes["crfe2_actualpickup"];
+                        report.Attributes.Add("crfe2_date", rent.Attributes["crfe2_actualpickup"]);
                     }
                     else if((int)report.Attributes["crfe2_type"] == 1)
                     {
-                        report.Attributes["crfe2_date"] = rent.Attributes["crfe2_actualreturn"];
+                        report.Attributes.Add("crfe2_date",  rent.Attributes["crfe2_actualreturn"]);
                     }
                     
 
