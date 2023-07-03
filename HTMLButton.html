@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function createPickupButtonClick() {
+            //var entityName = "crfe2_cartransferreport"; // Logical name of the Pickup Report entity
+
+            //var windowOptions = {
+            //    openInNewWindow: true,
+            //    windowPosition: 2 // Display the form as a pop-up
+            //};
+
+            //var formParameters = {};
+
+            //parent.Xrm.Navigation.openForm({
+            //    entityName: entityName,
+            //    openInNewWindow: windowOptions.openInNewWindow,
+            //    windowPosition: windowOptions.windowPosition,
+            //    formParameters: formParameters
+            //}).then(
+            //    function (success) {
+            //        // Callback function after the Quick Create form is closed
+            //        // Handle the success case here if needed
+            //    },
+            //    function (error) {
+            //        console.log(error.message);
+            //    }
+            //);
+
+
+            //parent.Xrm.Utility()
+
+            var entityName = "crfe2_cartransferreport"; // Logical name of the Pickup Report entity
+
+            var parameters = {};
+            parameters["crfe2_rentids"] = parent.Xrm.Page.data.entity.getId(); // Set the parent customer lookup field
+
+            parent.Xrm.Utility.openQuickCreate(entityName, null, parameters).then(
+                function (entityReference) {
+                    // Callback function after the Quick Create form is closed
+                    if (entityReference !== null) {
+                        // A new record was created and the user clicked Save
+                        var pickupReportLookup = [{
+                            id: entityReference.id,
+                            entityType: entityReference.entityType,
+                            name: entityReference.name
+                        }];
+                        parent.Xrm.Page.getAttribute("crfe2_pickupreport").setValue(pickupReportLookup);
+                    } else {
+                        // The user closed the Quick Create form without saving a new record
+                    }
+                },
+                function (error) {
+                    console.log(error.message);
+                }
+            );
+
+
+        }
+
+        
+    </script>
+
+</head>
+<body>
+    <input type="button" value="Create report" onclick="createPickupButtonClick()"/>
+</body>
+</html>
